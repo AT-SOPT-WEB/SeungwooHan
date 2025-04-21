@@ -18,7 +18,7 @@ html {
     background-color: #F0F0F0;
     color: #8D8DAA;
     font-size: 16px;
-    z-index: 1000;
+    z-index: 500;
     padding: 12px 12px;
   }
   
@@ -68,7 +68,7 @@ html {
   
   .category-list li {
     text-align: center;
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   
   .category-list li a {
@@ -218,7 +218,7 @@ html {
   .img-likes {
     color: black;
     margin-top: 5px;
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 
   .heart:hover {
@@ -253,7 +253,7 @@ html {
     display: flex;
     background-color: #F0F0F0;
     padding: 10px 30px;
-    font-size: 10px;
+    font-size: 0.625rem;
     line-height: 1.8;
   }
 

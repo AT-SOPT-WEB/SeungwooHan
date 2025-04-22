@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2주차 과제 - todo 만들기</title>
+  </head>
+  <body>
+    <h1>할 일 하자!</h1>
+    <div class="container">
+      <div class="filter-section">
+        <button>전체</button>
+        <button>완료됨</button>
+        <button>미완료</button>
+        <select class="priority">
+          <option>중요도</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    <main>
+      <div class="input-section">
+        <input type="text" placeholder="할 일을 입력해주세요" />
+        <select>
+          <option>중요도 선택</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+        <button class="add">추가</button>
+      </div>
+
+      <div class="button-section">
+        <button class="delete">삭제</button>
+        <button class="complete">완료</button>
+      </div>
+
+      <section class="todo-list">
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="select-all" onclick="toggleAll(this)" /></th>
+              <th>중요도</th>
+              <th>완료됨</th>
+              <th>할 일</th>
+            </tr>
+          </thead>
+          <tbody id="todo-list-body">
+            <tr>
+
+            </tr>
+          </tbody>
+        </table>
+      </section>
+  </main>
+  <script type="module" src="script.js"></script>
+  </body>
+</html>

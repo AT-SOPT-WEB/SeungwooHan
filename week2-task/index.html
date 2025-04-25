@@ -10,21 +10,21 @@
     <h1>할 일 하자!</h1>
     <div class="container">
       <div class="filter-section">
-        <button>전체</button>
-        <button>완료됨</button>
-        <button>미완료</button>
-        <select class="priority">
-          <option>중요도</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
+        <button id="filter-all">전체</button>
+        <button id="filter-completed">완료됨</button>
+        <button id="filter-incomplete">미완료</button>
+        <select class="priority" id="filter-priority">
+          <option value="" disabled selected hidden>중요도</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
         </select>
       </div>
     <main>
-      <div class="input-section">
+      <div class="input-section"> 
         <input type="text" placeholder="할 일을 입력해주세요" />
         <select>
-          <option>중요도 선택</option>
+          <option value="" disabled selected hidden>중요도 선택</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>

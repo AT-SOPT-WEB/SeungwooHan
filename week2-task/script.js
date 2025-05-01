@@ -1,9 +1,7 @@
-// 초기 데이터 설정 및 localStorage 저장
-import { todos as initialTodos } from "./data.js";
+import { todos as initTodos } from "./data.js";
 
 const STORAGE_KEY = "todoList";
 const tbody = document.getElementById("todo-list-body");
-
 const inputEl = document.querySelector(".input-section input");
 const selectEl = document.querySelector(".input-section select");
 const addBtn = document.querySelector(".input-section .add");
@@ -11,15 +9,15 @@ const deleteBtn = document.querySelector(".button-section .delete");
 const completeBtn = document.querySelector(".button-section .complete");
 const selectAllCheckbox = document.getElementById("select-all");
 
-// 전체, completed, incomplete
+// 필터 조건 항목들
 let currentFilter = "all";
-// 1, 2, 3
 let currentPriority = "";
 
-// 초기 데이터 localStorage에 저장
-function initializeStorage() {
-  if (!localStorage.getItem(STORAGE_KEY)) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialTodos));
+// 저장된 데이터 없을 때 초기 데이터 설정
+function initStorage() {
+  const savedList = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (!savedList || savedList.length === 0) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(initTodos));
   }
 }
 
@@ -85,17 +83,16 @@ function handleAddTodo() {
   renderTable();
 }
 
-// 체크된 todo 삭제 기능
+// 선택 항목 삭제
 function handleDeleteTodo() {
   const todoList = getTodoList();
   const checkedIds = getCheckedIds();
-
   const updated = todoList.filter((item) => !checkedIds.includes(item.id));
   updateTodoList(updated);
   renderTable();
 }
 
-// 체크된 미완료 todo 완료 처리 기능
+// 미완료 항목에서 완료 처리
 function handleCompleteTodo() {
   const todoList = getTodoList();
   const checkedIds = getCheckedIds();
@@ -109,57 +106,67 @@ function handleCompleteTodo() {
     return;
   }
 
-  const updated = todoList.map((item) => {
-    if (checkedIds.includes(item.id) && !item.completed) {
-      return { ...item, completed: true };
-    }
-    return item;
-  });
+  const updated = todoList.map((item) =>
+    checkedIds.includes(item.id) && !item.completed
+      ? { ...item, completed: true }
+      : item
+  );
 
   updateTodoList(updated);
   renderTable();
 
-  const checkboxes = document.querySelectorAll(
-    '#todo-list-body input[type="checkbox"]'
-  );
+  // tbody.queryselectorall을 사용하여 최적화
+  const checkboxes = tbody.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((cb) => {
     const id = Number(cb.dataset.id);
-    if (checkedIds.includes(id)) {
-      cb.checked = false;
-    }
+    if (checkedIds.includes(id)) cb.checked = false;
   });
 
   selectAllCheckbox.checked = false;
 }
 
-// todo 테이블 렌더링
+// 할일목록 렌더링 시키기
 function renderTable() {
   const todoList = getTodoList();
-  tbody.innerHTML = "";
+  const filteredList = getFilteredList(todoList);
 
-  const filtered = todoList.filter((item) => {
-    if (currentFilter === "completed") return item.completed;
-    if (currentFilter === "incomplete") return !item.completed;
-    if (currentFilter === "priority")
-      return String(item.priority) === currentPriority;
-    return true;
+  tbody.innerHTML = filteredList.length
+    ? renderRows(filteredList)
+    : renderEmptyRow();
+}
+
+function getFilteredList(list) {
+  return list.filter((item) => {
+    switch (currentFilter) {
+      case "completed":
+        return item.completed;
+      case "incomplete":
+        return !item.completed;
+      case "priority":
+        return String(item.priority) === currentPriority;
+      default:
+        return true;
+    }
   });
+}
 
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4">표시할 할 일이 없습니다.</td></tr>`;
-    return;
-  }
-
-  filtered.forEach((item) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
+function renderRows(list) {
+  return list
+    .map(
+      (item) => `
+    <tr>
       <td><input type="checkbox" data-id="${item.id}"></td>
       <td>${item.priority}</td>
       <td>${item.completed ? "✅" : "❌"}</td>
       <td>${item.title}</td>
-    `;
-    tbody.appendChild(row);
-  });
+    </tr>
+  `
+    )
+    .join("");
+}
+
+function renderEmptyRow() {
+  return `<tr><td colspan="4">표시할 할 일이 없습니다.</td></tr>`;
 }
 
 // localStorage에서 todoList 가져오기
@@ -167,24 +174,20 @@ function getTodoList() {
   return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 }
 
-// localStorage에 todoList 저장하기
+//localStorage에 todoList 저장하기
 function updateTodoList(todoList) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todoList));
 }
 
-// 체크된 todo들의 id 배열 가져오기
+// tbody.queryselectorall을 사용하여 최적화
 function getCheckedIds() {
-  const checked = document.querySelectorAll(
-    '#todo-list-body input[type="checkbox"]:checked'
-  );
+  const checked = tbody.querySelectorAll('input[type="checkbox"]:checked');
   return Array.from(checked).map((checkbox) => Number(checkbox.dataset.id));
 }
 
-// 전체 선택 체크박스 기능
+// tbody.queryselectorall을 사용하여 최적화
 function toggleAll(checkbox) {
-  const checkboxes = document.querySelectorAll(
-    '#todo-list-body input[type="checkbox"]'
-  );
+  const checkboxes = tbody.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((cb) => {
     cb.checked = checkbox.checked;
   });
@@ -192,7 +195,7 @@ function toggleAll(checkbox) {
 
 // 페이지 로드 시 초기 설정
 window.addEventListener("DOMContentLoaded", () => {
-  initializeStorage();
+  initStorage();
   setupFilterEvents();
   setupButtonEvents();
   setupSelectAllEvent();

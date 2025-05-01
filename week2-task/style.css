@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffb347;
+  color: #000000;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
+  color: #ffffff;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-section button,
+.filter-section select {
+  background-color: #ff7043;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.input-section input,
+.input-section select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+.input-section .add {
+  background-color: #ff7043;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.button-section button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: #ff7043;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.todo-list table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.todo-list th,
+.todo-list td {
+  border: 1px solid #cccccc;
+  padding: 10px;
+}
+
+.todo-list th {
+  background-color: #ffcc80;
+}
+
+.todo-list tr:nth-child(even) {
+  background-color: #fff8e1;
+}

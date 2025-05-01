@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>2주차 과제 - todo 만들기</title>
+  </head>
+  <body>
+    <h1>할 일 하자!</h1>
+    <div class="container">
+      <div class="filter-section">
+        <button id="filter-all">전체</button>
+        <button id="filter-completed">완료됨</button>
+        <button id="filter-incomplete">미완료</button>
+        <select class="priority" id="filter-priority">
+          <option value="" disabled selected hidden>중요도</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    <main>
+      <div class="input-section"> 
+        <input type="text" placeholder="할 일을 입력해주세요" />
+        <select>
+          <option value="" disabled selected hidden>중요도 선택</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+        <button class="add">추가</button>
+      </div>
+
+      <div class="button-section">
+        <button class="delete">삭제</button>
+        <button class="complete">완료</button>
+      </div>
+
+      <section class="todo-list">
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="select-all" onclick="toggleAll(this)" /></th>
+              <th>중요도</th>
+              <th>완료됨</th>
+              <th>할 일</th>
+            </tr>
+          </thead>
+          <tbody id="todo-list-body"></tbody>
+        </table>
+      </section>
+  </main>
+  <script type="module" src="script.js"></script>
+  </body>
+</html>

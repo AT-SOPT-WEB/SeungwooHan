@@ -1,12 +1,12 @@
 import { Container, ButtonContainer, Btn } from "./style.js";
 
-const Header = () => {
+const Header = ({ onMenuClick }) => {
   return (
     <Container>
       <div>⚾ 숫자 야구 || 깃허브 검색 ⚾</div>
       <ButtonContainer>
-        <Btn>깃허브 검색</Btn>
-        <Btn>숫자야구</Btn>
+        <Btn onClick={() => onMenuClick("github")}>깃허브 검색</Btn>
+        <Btn onClick={() => onMenuClick("baseball")}>숫자야구</Btn>
       </ButtonContainer>
     </Container>
   );

@@ -20,6 +20,52 @@ export const SearchInput = styled.input`
   }
 `;
 
+export const RecentBox = styled.div`
+  margin-top: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+`;
+
+export const Title = styled.div`
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+`;
+
+export const RecentList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;
+
+export const RecentItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  border-radius: 1rem;
+  background-color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: black;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightNavy};
+    color: white;
+  }
+`;
+
+export const RecentRemoveBtn = styled.button`
+  font-size: 1.2rem;
+  color: red;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
 export const UserCard = styled.section`
   margin: 3rem auto 0;
   max-width: 400px;
@@ -28,7 +74,7 @@ export const UserCard = styled.section`
   padding: 2rem;
   border-radius: 1.5rem;
   position: relative;
-  box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 `;
 
 export const CloseBtn = styled.button`
@@ -36,8 +82,9 @@ export const CloseBtn = styled.button`
   top: 1.2rem;
   right: 1.2rem;
   background: transparent;
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
 `;
 
 export const ProfileImage = styled.img`
@@ -78,10 +125,12 @@ export const FollowSection = styled.dl`
 
 export const FollowItem = styled.div`
   text-align: center;
+
   dt {
     font-size: 1.3rem;
     margin-bottom: 0.3rem;
   }
+
   dd {
     font-size: 1.6rem;
     font-weight: bold;

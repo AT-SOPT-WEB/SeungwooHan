@@ -1,8 +1,14 @@
-import { css } from "@emotion/react";
-import "./App.css";
+import { Global } from "@emotion/react";
+import GlobalStyle from "./styles/GlobalStyle";
+import Header from "./components/Header";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Global styles={GlobalStyle} />
+      <Header />
+    </>
+  );
 }
 
 export default App;

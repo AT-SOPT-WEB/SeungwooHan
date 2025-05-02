@@ -27,7 +27,10 @@ const compareGuess = (guess, answer) => {
 };
 
 const WIN_MESSAGE = "🎉 정답입니다! 3초 뒤에 게임이 리셋됩니다.";
+const LOSE_MESSAGE =
+  "❌ 게임 오버! 10번을 넘겨서 실패하였습니다. 게임이 초기화됩니다.";
 const DUPLICATE_WARNING = "⚠️ 서로 다른 숫자 3자리를 입력해주세요!";
+const MAX_TRIES = 10;
 
 const Baseball = () => {
   const theme = useTheme();
@@ -36,15 +39,11 @@ const Baseball = () => {
   const [answer, setAnswer] = useState("");
   const [history, setHistory] = useState([]);
   const [gameLocked, setGameLocked] = useState(false);
-  const timeoutId = useRef(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const newAnswer = createAnswer();
-    setAnswer(newAnswer);
-    console.log("🎯 정답:", newAnswer);
-    return () => {
-      if (timeoutId.current) clearTimeout(timeoutId.current);
-    };
+    setAnswer(createAnswer());
+    return () => clearTimeout(timeoutRef.current);
   }, []);
 
   const resetGame = () => {
@@ -58,32 +57,39 @@ const Baseball = () => {
   const handleInputChange = (e) => {
     const raw = e.target.value.replace(/\D/g, "").slice(0, 3);
     setInput(raw);
-    setFeedback("");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && input.length === 3) {
+    if (e.key === "Enter" && !gameLocked && input.length === 3) {
       const digits = input.split("");
-      const uniqueDigits = new Set(digits);
+      const isUnique = new Set(digits).size === 3;
 
-      if (uniqueDigits.size !== 3) {
+      if (!isUnique) {
         setFeedback(DUPLICATE_WARNING);
         return;
       }
 
       const { strike, ball } = compareGuess(input, answer);
+      const resultText = `${strike} 스트라이크 ${ball} 볼`;
+
+      const newHistory = [
+        ...history,
+        { value: input, result: `${strike}S ${ball}B` },
+      ];
+
+      setHistory(newHistory);
+      setInput("");
 
       if (strike === 3) {
         setFeedback(WIN_MESSAGE);
-        setHistory((prev) => [...prev, { value: input, result: "3S 0B" }]);
         setGameLocked(true);
-        timeoutId.current = setTimeout(() => resetGame(), 3000);
+        timeoutRef.current = setTimeout(() => resetGame(), 3000);
+      } else if (newHistory.length >= MAX_TRIES) {
+        setFeedback(LOSE_MESSAGE);
+        setGameLocked(true);
+        timeoutRef.current = setTimeout(() => resetGame(), 5000);
       } else {
-        setFeedback(`${strike} 스트라이크 ${ball} 볼`);
-        setHistory((prev) => [
-          ...prev,
-          { value: input, result: `${strike}S ${ball}B` },
-        ]);
+        setFeedback(resultText);
       }
     }
   };
@@ -94,13 +100,13 @@ const Baseball = () => {
         type="text"
         inputMode="numeric"
         maxLength={3}
-        aria-label="숫자야구 입력"
-        placeholder="3자리 숫자를 입력해주세요."
         value={input}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        css={searchBox(theme)}
         disabled={gameLocked}
+        placeholder="3자리 숫자를 입력해주세요."
+        css={searchBox(theme)}
+        aria-label="숫자야구 입력"
       />
 
       {feedback && <div css={errorText(theme)}>{feedback}</div>}

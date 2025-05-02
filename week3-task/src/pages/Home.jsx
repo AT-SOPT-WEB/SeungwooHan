@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-      <Header onMenuClick={handleMenuClick} />
+      <Header onMenuClick={handleMenuClick} selectedMenu={selectedMenu} />
       <main>
         {selectedMenu === "github" && <GithubSearch />}
         {selectedMenu === "baseball" && <Baseball />}

@@ -93,6 +93,8 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   margin: 1rem 0;
   cursor: pointer;
+  margin: 1rem auto;
+  display: block;
 `;
 
 export const NameLink = styled.a`
